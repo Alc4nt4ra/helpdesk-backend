@@ -10,60 +10,58 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.helpdesk.domain.Pessoa;
-import com.br.helpdesk.domain.Tecnico;
-import com.br.helpdesk.domain.dtos.TecnicoDTO;
+import com.br.helpdesk.domain.Cliente;
+import com.br.helpdesk.domain.dtos.ClienteDTO;
 import com.br.helpdesk.repositores.PessoaRepository;
-import com.br.helpdesk.repositores.TecnicoRepository;
+import com.br.helpdesk.repositores.ClienteRepository;
 import com.br.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.br.helpdesk.services.exceptions.ObjectnotFoundException;
 
 @Service
-public class TecnicoService {
+public class ClienteService {
 
 	@Autowired
-	private TecnicoRepository repository;
+	private ClienteRepository repository;
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
-
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
-	public Tecnico findById(Integer id) {
-		Optional<Tecnico> obj = repository.findById(id);
+	public Cliente findById(Integer id) {
+		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! Id: " + id));
 	}
 
-	public List<Tecnico> findAll() {
+	public List<Cliente> findAll() {
 		return repository.findAll();
 	}
 
-	public Tecnico create(TecnicoDTO objDTO) {
+	public Cliente create(ClienteDTO objDTO) {
 		objDTO.setId(null);
 		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
 		validaCpfEmail(objDTO);
-		Tecnico newObj = new Tecnico(objDTO);
+		Cliente newObj = new Cliente(objDTO);
 		return repository.save(newObj);
 
 	}
 
-	public Tecnico update(@Valid Integer id, TecnicoDTO objDTO) {
+	public Cliente update(@Valid Integer id, ClienteDTO objDTO) {
 		objDTO.setId(id);
-		Tecnico oldObj = findById(id);
+		Cliente oldObj = findById(id);
 		validaCpfEmail(objDTO);
-		oldObj = new Tecnico(objDTO);
+		oldObj = new Cliente(objDTO);
 		return repository.save(oldObj);
 	}
 
 	public void delete(Integer id) {
-		Tecnico obj = findById(id);
+		Cliente obj = findById(id);
 		if (obj.getChamados().size() > 0) {
-			throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado!");
+			throw new DataIntegrityViolationException("Cliente possui ordens de serviço e não pode ser deletado!");
 		}
 		repository.deleteById(id);
 	}
 
-	private void validaCpfEmail(TecnicoDTO objDTO) {
+	private void validaCpfEmail(ClienteDTO objDTO) {
 
 		Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
 
