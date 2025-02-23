@@ -1,7 +1,6 @@
 package com.br.helpdesk.resources.exceptions;
 
 import java.net.URI;
-import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +54,7 @@ public class ChamadoResource {
 		}
 
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ChamadoDTO> update(@Valid @PathVariable Integer id, @RequestBody ChamadoDTO objDTO){
 		Chamado newObj = service.update(id,objDTO);

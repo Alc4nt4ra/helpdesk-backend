@@ -16,11 +16,11 @@ public class DevConfig {
 
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String value;
-	
+
 	@Bean
 	public boolean instaciaDB() {
 		if(value.equals("create")) {
-			this.dbservice.instaciaDB();	
+			this.dbservice.instaciaDB();
 		}
 		return false;
 	}

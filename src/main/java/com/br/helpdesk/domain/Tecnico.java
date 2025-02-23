@@ -17,7 +17,7 @@ public class Tecnico extends Pessoa {
 	@JsonIgnore
 	@OneToMany( mappedBy = "tecnico")
 	private List<Chamado> chamados = new ArrayList<>();
-	
+
 	public Tecnico() {
 		super();
 		addPerfil(Perfil.CLIENTE);
@@ -38,7 +38,7 @@ public class Tecnico extends Pessoa {
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
 		this.dataCriacao = obj.getDataCriacao();
 	}
-	
+
 	public List<Chamado> getChamados() {
 		return chamados;
 	}
@@ -46,5 +46,5 @@ public class Tecnico extends Pessoa {
 	public void setChamados(List<Chamado> chamados) {
 		this.chamados = chamados;
 	}
-	
+
 }

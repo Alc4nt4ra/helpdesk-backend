@@ -15,22 +15,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-     protected Integer id; 
+     protected Integer id;
      @NotNull(message = "O campo NOME é requirido")
 	 protected String nome;
      @NotNull(message = "O campo CPF é requirido")
-     protected String cpf; 
+     protected String cpf;
      @NotNull(message = "O campo EMAIL é requirido")
 	 protected String email;
      @NotNull(message = "O campo SENHA é requirido")
-	 protected String senha; 
+	 protected String senha;
      protected Set<Integer> perfis = new HashSet<>();
 	 @JsonFormat(pattern = "dd/MM/yyyy")
      protected LocalDate dataCriacao = LocalDate.now();
 	public ClienteDTO() {
 		super();
 	}
-	
+
 	public ClienteDTO(Cliente obj) {
 		super();
 		this.id = obj.getId();
@@ -97,6 +97,6 @@ public class ClienteDTO implements Serializable {
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
-	
+
+
 }

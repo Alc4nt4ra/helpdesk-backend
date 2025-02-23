@@ -35,7 +35,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	        throws AuthenticationException {
 	    try {
 	        CredenciaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
-	        UsernamePasswordAuthenticationToken authenticationToken = 
+	        UsernamePasswordAuthenticationToken authenticationToken =
 	                new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
 	        return authenticationManager.authenticate(authenticationToken);
 	    } catch (IOException e) {
@@ -44,21 +44,21 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	        throw new AuthenticationServiceException("Falha na autenticação", e);
 	    }
 	}
-	
+
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		
+
 		String username = ((UserSS) authResult.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		response.setHeader("access-control-expose-headers", "Authorization");
 		response.setHeader("Authorization", "Bearer " + token);
 	}
-	
+
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		
+
 		response.setStatus(401);
 		response.setContentType("application/json");
 		response.getWriter().append(json());
@@ -67,11 +67,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private CharSequence json() {
 		long date = new Date().getTime();
 		return "{"
-				+ "\"timestamp\": " + date + ", " 
+				+ "\"timestamp\": " + date + ", "
 				+ "\"status\": 401, "
 				+ "\"error\": \"Não autorizado\", "
 				+ "\"message\": \"Email ou senha inválidos\", "
 				+ "\"path\": \"/login\"}";
 	}
-	
+
 }

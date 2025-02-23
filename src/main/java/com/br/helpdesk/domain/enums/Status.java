@@ -19,7 +19,7 @@ public enum Status {
 	public String getDescricao() {
 		return descricao;
 	}
-	
+
 	public static Status toEnum(Integer cod) {
 		if (cod == null) {
 			return null;

@@ -28,7 +28,7 @@ public class TecnicoService {
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
+
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! Id: " + id));

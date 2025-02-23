@@ -23,7 +23,7 @@ public class ResourceExceptionHandler {
 				"Object Not Found", ex.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
-	
+
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
 			HttpServletRequest request) {
@@ -38,11 +38,11 @@ public class ResourceExceptionHandler {
 
 		ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 				"Validation error ", "Erros nas validações dos campos", request.getRequestURI());
-		
+
 		for(FieldError x : ex.getBindingResult().getFieldErrors() ) {
 			errors.addErrors(x.getField(), x.getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 }

@@ -129,5 +129,5 @@ public class Chamado implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 }
